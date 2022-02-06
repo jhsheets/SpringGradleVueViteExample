@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(gradle.project_java_version)
+    }
+}
+
+
+dependencies {
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api' //:5.8.2
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine' //:5.8.2
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+// We need to include the org.springframework.boot plugin, but we aren't a runnable, so disable these tasks
+bootJar { enabled = false }
+bootRun { enabled = false }

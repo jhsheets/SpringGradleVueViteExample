@@ -1,0 +1,9 @@
+# Default ignored files
+.idea/workspace.xml
+syntax: glob
+.gradle/
+modules/WebFrontend/node_modules/
+modules/WebFrontend/dist/
+.env.development.local
+.env.local
+modules/*/build/

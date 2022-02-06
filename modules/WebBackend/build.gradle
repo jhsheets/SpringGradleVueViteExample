@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(gradle.project_java_version)
+    }
+}
+
+dependencies {
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+    implementation project(':modules:BackendService')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+// This task will copy the WebFrontend distributable into our war
+task copyWebFrontendDistToBuild(type: Copy) {
+    from project(":modules:WebFrontend").file("dist")
+    into "${buildDir}/resources/main/static"
+}
+
+// Make sure our copyWebFrontendDistToBuild task triggers the WebFrontend to build so its distributable exists
+copyWebFrontendDistToBuild.dependsOn ":modules:WebFrontend:npmBuild"
+
+// This will get called whenever we build our bootWar/bootJar
+// Calling before processResources would be better, but this gets called whenever we need to compile code, not just building the war/jar
+//processResources.dependsOn copyWebFrontendDistToBuild
+bootWar.dependsOn copyWebFrontendDistToBuild
+bootJar.dependsOn copyWebFrontendDistToBuild
+bootRun.dependsOn copyWebFrontendDistToBuild
+
+bootWar {
+    archiveBaseName = rootProject.name
+}
+bootJar {
+    archiveBaseName = rootProject.name
+}
+
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

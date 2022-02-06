@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Launch WebBackend" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="SpringGradleSpa.modules.WebBackend.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.SpringGradleSpa.SpringGradleSpaApplication" />
+    <option name="ACTIVE_PROFILES" value="dev" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2">
+      <option name="Gradle.BeforeRunTask" enabled="true" tasks="clean" externalProjectPath="$PROJECT_DIR$/modules/WebBackend" vmOptions="" scriptParameters="" />
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

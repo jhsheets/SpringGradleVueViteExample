@@ -1,0 +1,42 @@
+plugins {
+    id "com.github.node-gradle.node"
+    id "org.jetbrains.gradle.plugin.idea-ext"
+}
+
+
+node {
+    download = true
+
+    // The directory where Node.js is unpacked (when download is true)
+    workDir = file("${rootProject.projectDir}/.gradle/nodejs")
+
+    // The directory where npm is installed (when a specific version is defined)
+    npmWorkDir = file("${rootProject.projectDir}/.gradle/npm")
+
+    // The directory where yarn is installed (when a Yarn task is used)
+    yarnWorkDir = file("${rootProject.projectDir}/.gradle/yarn")
+}
+
+task runDevServer(type: NpmTask, dependsOn: npmInstall) {
+    group = 'node'
+    args = ['run', 'dev']
+}
+
+task clean {
+    delete './dist'
+}
+
+task npmBuild(type: NpmTask, dependsOn: npmInstall) {
+	group = 'node'
+	args = ['run', 'build']
+}
+
+npmBuild.dependsOn clean
+
+
+
+idea {
+    module {
+        excludeDirs = [file("dist")]
+    }
+}

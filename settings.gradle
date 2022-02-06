@@ -1,0 +1,23 @@
+pluginManagement {
+	repositories {
+		mavenCentral()
+		maven { url 'https://repo.spring.io/milestone' }
+		maven { url 'https://repo.spring.io/snapshot' }
+		gradlePluginPortal()
+	}
+}
+
+rootProject.name = 'SpringGradleVueViteExample'
+
+// Define a gradle property we can reference in the sub-modules
+gradle.ext.project_java_version = 17
+
+include 'modules:BackendService'
+findProject(':modules:BackendService')?.name = 'BackendService'
+
+include 'modules:WebBackend'
+findProject(':modules:WebBackend')?.name = 'WebBackend'
+
+include 'modules:WebFrontend'
+findProject(':modules:WebFrontend')?.name = 'WebFrontend'
+
